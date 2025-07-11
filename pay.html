@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NP อาหารแช่แข็ง - ชำระเงิน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <!-- ลิงก์ไปยังไฟล์ CSS -->
+    <style>
+        /* เพิ่มหรือแก้ไขสไตล์ที่นี่เพื่อเพิ่มสีสัน */
+        /* สไตล์สำหรับส่วนวิธีการชำระเงิน */
+        .payment-section {
+            background-color: #f8bbd0; /* เปลี่ยนสีพื้นหลังให้เข้มขึ้นเล็กน้อย */
+            padding: 20px; /* ลด padding ลง */
+            border-radius: 12px; /* ทำให้มุมโค้งมนขึ้น */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* เพิ่มเงาให้ดูมีมิติ */
+            border: none; /* ลบ border เดิมออก */
+            max-width: 800px; /* ปรับความกว้างสูงสุดให้กว้างขึ้น */
+            margin: 20px auto; /* จัดให้อยู่ตรงกลาง */
+        }
+
+        /* สไตล์สำหรับปุ่มยืนยันการสั่งซื้อ */
+        .nav-buttons .button.submit {
+            background-color: #28a745; /* สีเขียวที่สดใสขึ้น */
+            padding: 18px 35px; /* เพิ่มขนาดปุ่ม */
+            font-size: 1.4em; /* เพิ่มขนาดตัวอักษร */
+            border-radius: 10px; /* ทำให้มุมโค้งมนขึ้น */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้ปุ่ม */
+            transition: all 0.3s ease; /* เพิ่ม transition สำหรับ hover effect */
+        }
+
+        .nav-buttons .button.submit:hover {
+            background-color: #218838; /* สีเขียวเข้มขึ้นเมื่อ hover */
+            transform: translateY(-2px); /* ยกปุ่มขึ้นเล็กน้อยเมื่อ hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* เพิ่มเงาเมื่อ hover */
+        }
+
+        /* สไตล์สำหรับปุ่มย้อนกลับ */
+        .nav-buttons .button {
+            background-color: #6c757d; /* สีเทาสำหรับปุ่มย้อนกลับ */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .nav-buttons .button:hover {
+            background-color: #5a6268;
+        }
+
+        /* สไตล์สำหรับข้อความรายละเอียดการชำระเงิน */
+        .payment-details {
+            text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .payment-details p {
+            color: #4a148c; /* เปลี่ยนสีข้อความให้เป็นสีม่วงเข้ม */
+            font-weight: 500;
+        }
+        .payment-details strong {
+            color: #880e4f; /* คงสีแดงเข้มสำหรับตัวหนา */
+        }
+
+        /* สไตล์สำหรับ label แนบสลิป */
+        .upload-slip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+        }
+        .upload-slip label {
+            color: #ad1457; /* คงสีแดงเข้ม */
+            font-size: 1.1em;
+        }
+
+        /* สไตล์สำหรับ div ที่ครอบ QR Code */
+        .qr-code-container {
+            text-align: center; /* จัดรูปภาพและข้อความ QR Code ให้อยู่ตรงกลาง */
+            margin-top: 20px;
+        }
+
+        /* แก้ไขตรงนี้: เพิ่ม width: 100% ให้ nav-buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            width: 100%; /* <--- เพิ่มบรรทัดนี้ */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+       <center> <h1>NP อาหารแช่แข็ง</h1></center>
+       <center> <h3>วิธีการชำระเงิน</h3></center>
+
+        <form id="paymentForm" class="payment-section">
+            <div class="payment-details">
+                <p>โอนเงินผ่านบัญชีธนาคาร:</p>
+                <p>ธนาคาร: <strong>XXX Bank</strong></p>
+                <p>ชื่อบัญชี: <strong>NP อาหารแช่แข็ง</strong></p>
+                <p>เลขที่บัญชี: <strong>123-4-56789-0</strong></p>
+            </div>
+                
+            <!-- START: QR Code Image -->
+            <div class="qr-code-container"> <!-- เพิ่ม class สำหรับจัดกลาง -->
+                <p>สแกน QR Code เพื่อโอนเงิน:</p>
+                <img src="qr.png.png" 
+                     alt="QR Code สำหรับการชำระเงิน" 
+                     style="max-width: 155px; height: auto; border: 1px solid #ddd; border-radius: 5px;">
+                <!-- หมายเหตุ: หากไฟล์รูปภาพของคุณมีนามสกุล (เช่น img.png, img.jpg)
+                         คุณต้องระบุชื่อพร้อมนามสกุลให้ถูกต้อง เช่น src="img.png" -->
+            </div>
+            <!-- END: QR Code Image -->
+
+            <div class="upload-slip">
+                <label for="slip-upload">แนบสลิปหลักฐานการโอนเงิน:</label>
+                <input type="file" id="slip-upload" accept="image/*" required>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="address.html" class="button">ย้อนกลับ</a> 
+                <button type="submit" class="button submit">ยืนยันการสั่งซื้อ</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('pay.html: Page loaded.'); 
+            const paymentForm = document.getElementById('paymentForm');
+            const slipUploadInput = document.getElementById('slip-upload');
+
+            // LINE ID ที่ต้องการส่งข้อความไปหา
+            const LINE_TARGET_ID = "vcbmn1"; 
+
+            // ดึงข้อมูลจาก localStorage ทันทีที่หน้าโหลด
+            const selectedItems = JSON.parse(localStorage.getItem('selectedMenuItems')) || [];
+            const totalOrderAmount = parseFloat(localStorage.getItem('totalOrderAmount')) || 0;
+            const customerInfo = JSON.parse(localStorage.getItem('customerInfo')) || {};
+
+            console.log('pay.html: Data retrieved from localStorage:');
+            console.log('Selected Items:', selectedItems);
+            console.log('Total Order Amount:', totalOrderAmount);
+            console.log('Customer Info:', customerInfo); // *** ตรวจสอบตรงนี้ว่ามีข้อมูลหรือไม่ ***
+
+            // แสดง alert ถ้าข้อมูลไม่พบ
+            if (selectedItems.length === 0 || totalOrderAmount === 0) {
+                alert('ไม่พบรายการสั่งซื้อ กรุณากลับไปเลือกเมนูใหม่');
+                console.error('pay.html: Error - No selected items or total amount found. Redirecting to index.html');
+                // หากไม่มีรายการสั่งซื้อ ให้กลับไปหน้าแรก
+                window.location.href = 'index.html'; 
+                return;
+            }
+            if (!customerInfo.name || !customerInfo.tel || !customerInfo.address) {
+                alert('ไม่พบข้อมูลลูกค้า กรุณากลับไปกรอกข้อมูลลูกค้าใหม่');
+                console.error('pay.html: Error - Customer info is incomplete or missing. Redirecting to address.html');
+                // หากไม่มีข้อมูลลูกค้า ให้กลับไปหน้ากรอกข้อมูล
+                window.location.href = 'address.html';
+                return;
+            }
+
+
+            paymentForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+                console.log('pay.html: "ยืนยันการสั่งซื้อ" button clicked. Starting submission process.');
+
+                const slipFile = slipUploadInput.files[0];
+
+                if (!slipFile) {
+                    alert('กรุณาแนบสลิปหลักฐานการโอนเงิน');
+                    console.error('pay.html: Validation failed - No slip file attached.');
+                    return;
+                }
+
+                let orderDetailsText = 'ข้อมูลการสั่งซื้อ:\n';
+                orderDetailsText += `ชื่อ-นามสกุล: ${customerInfo.name || 'ไม่ระบุ'}\n`; 
+                orderDetailsText += `เบอร์โทรศัพท์: ${customerInfo.tel || 'ไม่ระบุ'}\n`;
+                orderDetailsText += `ที่อยู่จัดส่ง: ${customerInfo.address || 'ไม่ระบุ'}\n`;
+                if (customerInfo.room) orderDetailsText += `ห้อง/เลขที่: ${customerInfo.room}\n`;
+                if (customerInfo.floor) orderDetailsText += `ชั้น: ${customerInfo.floor}\n`;
+                orderDetailsText += '\nรายการอาหาร:\n';
+                selectedItems.forEach(item => {
+                    orderDetailsText += `- ${item.name} x ${item.quantity} (${item.price * item.quantity} บาท)\n`;
+                });
+                orderDetailsText += `\nรวมทั้งหมด: ${totalOrderAmount} บาท\n`;
+                orderDetailsText += `สลิป: (ไฟล์แนบชื่อ: ${slipFile.name})\n`; // แจ้งชื่อไฟล์สลิป
+
+                console.log('pay.html: Order details text prepared for LINE:\n', orderDetailsText);
+
+                // เข้ารหัสข้อความเพื่อให้ส่งผ่าน URL ได้อย่างถูกต้อง
+                const encodedMessage = encodeURIComponent(orderDetailsText);
+
+                // สร้าง URL สำหรับ LINE ที่จะเปิดหน้าส่งข้อความพร้อมข้อความที่เตรียมไว้
+                const lineUrl = `https://line.me/R/msg/text/?${encodedMessage}`; 
+                
+                // เปิด LINE ในแท็บใหม่
+                console.log('pay.html: Opening LINE URL:', lineUrl);
+                window.open(lineUrl, '_blank');
+
+                // แจ้งเตือนผู้ใช้ว่าต้องส่งสลิปแยก
+                alert('สั่งซื้อสำเร็จ! โปรดไปที่ LINE เพื่อ "เลือกผู้รับ" (LINE ID: ' + LINE_TARGET_ID + ') และกด "ส่ง" ข้อความสั่งซื้อครับ');
+                console.log('pay.html: Alert shown to user.');
+
+                // *** Optional: ล้างข้อมูลใน localStorage หลังจากส่งออเดอร์แล้ว เพื่อเตรียมพร้อมสำหรับออเดอร์ถัดไป ***
+                // localStorage.removeItem('selectedMenuItems');
+                // localStorage.removeItem('totalOrderAmount');
+                // localStorage.removeItem('customerInfo');
+            });
+        });
+    </script>
+</body>
+</html>

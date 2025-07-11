@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NP อาหารแช่แข็ง - ข้อมูลจัดส่ง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #1565c0; /* สีน้ำเงินสำหรับหัวข้อข้อมูลลูกค้า */
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .customer-info label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2196f3;
+        }
+        .customer-info input[type="text"],
+        .customer-info input[type="tel"],
+        .customer-info textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #90caf9;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .customer-info textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .nav-buttons .button {
+            background-color: #6c757d; /* สีเทาสำหรับปุ่มย้อนกลับ */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .nav-buttons .button.next {
+            background-color: #4CAF50; /* สีเขียวสำหรับปุ่มถัดไป */
+        }
+        .nav-buttons .button:hover {
+            background-color: #5a6268;
+        }
+        .nav-buttons .button.next:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NP อาหารแช่แข็ง</h1>
+        <h3>ข้อมูลผู้สั่งซื้อและจัดส่ง</h3>
+
+        <form id="customerInfoForm" class="customer-info">
+            <label for="customer-name">ชื่อ-นามสกุล:</label>
+            <input type="text" id="customer-name" name="customerName" required placeholder="เช่น สมชาย ใจดี">
+
+            <label for="customer-tel">เบอร์โทรศัพท์:</label>
+            <input type="tel" id="customer-tel" name="customerTel" required placeholder="เช่น 08XXXXXXXX" pattern="[0-9]{10}">
+
+            <label for="customer-address">ที่อยู่จัดส่ง:</label>
+            <textarea id="customer-address" name="customerAddress" rows="3" required placeholder="เช่น 123/4 หมู่บ้านสุขสันต์ ถนนประชาชื่น ซอย 5"></textarea>
+
+            <label for="customer-room">ห้อง/เลขที่ (ถ้ามี):</label>
+            <input type="text" id="customer-room" name="customerRoom" placeholder="เช่น 101, ห้อง A5">
+
+            <label for="customer-floor">ชั้น (ถ้ามี):</label>
+            <input type="text" id="customer-floor" name="customerFloor" placeholder="เช่น 3, G">
+
+            <div class="nav-buttons">
+                <a href="index.html" class="button">ย้อนกลับ</a>
+           <button type="submit" class="button next">ถัดไป</button>
+
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const customerInfoForm = document.getElementById('customerInfoForm');
+
+            // โหลดข้อมูลลูกค้าจาก localStorage ถ้ามี
+            const savedCustomerInfo = JSON.parse(localStorage.getItem('customerInfo'));
+            if (savedCustomerInfo) {
+                document.getElementById('customer-name').value = savedCustomerInfo.name || '';
+                document.getElementById('customer-tel').value = savedCustomerInfo.tel || '';
+                document.getElementById('customer-address').value = savedCustomerInfo.address || '';
+                document.getElementById('customer-room').value = savedCustomerInfo.room || '';
+                document.getElementById('customer-floor').value = savedCustomerInfo.floor || '';
+            }
+
+            customerInfoForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // ป้องกันการ submit form ปกติ
+
+                const customerName = document.getElementById('customer-name').value;
+                const customerTel = document.getElementById('customer-tel').value;
+                const customerAddress = document.getElementById('customer-address').value;
+                const customerRoom = document.getElementById('customer-room').value;
+                const customerFloor = document.getElementById('customer-floor').value;
+
+                if (!customerName || !customerTel || !customerAddress) {
+                    alert('กรุณากรอกข้อมูลผู้สั่งซื้อและที่อยู่จัดส่งให้ครบถ้วน');
+                    return;
+                }
+
+                // บันทึกข้อมูลลูกค้าลงใน localStorage
+                const customerInfo = {
+                    name: customerName,
+                    tel: customerTel,
+                    address: customerAddress,
+                    room: customerRoom,
+                    floor: customerFloor
+                };
+                localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
+
+                // ไปยังหน้าวิธีการชำระเงิน
+                window.location.href = 'pay.html';
+            });
+        });
+    </script>
+</body>
+</html>
